@@ -554,6 +554,38 @@
                         <td><input type="number" value="7" min="1" max="10" class="score-input" data-category="proximity"></td>
                         <td class="score-cell">0</td>
                     </tr>
+                    <tr>
+                        <td class="city-name">Minneapolis, MN</td>
+                        <td>3700000</td>
+                        <td><input type="number" value="6" min="1" max="10" class="score-input" data-category="home-price"></td>
+                        <td><input type="number" value="6" min="1" max="10" class="score-input" data-category="cost-of-living"></td>
+                        <td><input type="number" value="4" min="1" max="10" class="score-input" data-category="crime"></td>
+                        <td><input type="number" value="8" min="1" max="10" class="score-input" data-category="outdoors"></td>
+                        <td><input type="number" value="9" min="1" max="10" class="score-input" data-category="art-music"></td>
+                        <td><input type="number" value="7" min="1" max="10" class="score-input" data-category="environment"></td>
+                        <td><input type="number" value="9" min="1" max="10" class="score-input" data-category="cultural"></td>
+                        <td><input type="number" value="8" min="1" max="10" class="score-input" data-category="tech-jobs"></td>
+                        <td><input type="number" value="2" min="1" max="10" class="score-input" data-category="climate"></td>
+                        <td><input type="number" value="9" min="1" max="10" class="score-input" data-category="healthcare"></td>
+                        <td><input type="number" value="5" min="1" max="10" class="score-input" data-category="proximity"></td>
+                        <td class="score-cell">0</td>
+                    </tr>
+                    <tr>
+                        <td class="city-name">Duluth, MN</td>
+                        <td>280000</td>
+                        <td><input type="number" value="8" min="1" max="10" class="score-input" data-category="home-price"></td>
+                        <td><input type="number" value="8" min="1" max="10" class="score-input" data-category="cost-of-living"></td>
+                        <td><input type="number" value="6" min="1" max="10" class="score-input" data-category="crime"></td>
+                        <td><input type="number" value="10" min="1" max="10" class="score-input" data-category="outdoors"></td>
+                        <td><input type="number" value="6" min="1" max="10" class="score-input" data-category="art-music"></td>
+                        <td><input type="number" value="9" min="1" max="10" class="score-input" data-category="environment"></td>
+                        <td><input type="number" value="5" min="1" max="10" class="score-input" data-category="cultural"></td>
+                        <td><input type="number" value="3" min="1" max="10" class="score-input" data-category="tech-jobs"></td>
+                        <td><input type="number" value="2" min="1" max="10" class="score-input" data-category="climate"></td>
+                        <td><input type="number" value="6" min="1" max="10" class="score-input" data-category="healthcare"></td>
+                        <td><input type="number" value="4" min="1" max="10" class="score-input" data-category="proximity"></td>
+                        <td class="score-cell">0</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -675,31 +707,39 @@
                 /* Loop through all table rows (except the
                 first, which contains table headers): */
                 for (i = 1; i < (rows.length - 1); i++) {
+                    console.log("i1=",i)
                     // Start by saying there should be no switching:
                     shouldSwitch = false;
                     /* Get the two elements you want to compare,
                     one from current row and one from the next: */
-                    if(n == 1){
+                    if(n > 0){
                         x = rows[i].getElementsByTagName("TD")[n];
                         y = rows[i + 1].getElementsByTagName("TD")[n];
 
+                        let xinput = x.querySelector("input");
+                        let yinput = y.querySelector("input");
+
+                        let xval = parseFloat(xinput.value);
+                        let yval = parseFloat(yinput.value);
+
                         if (dir == "asc") {
-                            if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+                            if (xval > yval) {
                                 // If so, mark as a switch and break the loop:
                             shouldSwitch = true;
                             break;
                             }
                         } else if (dir == "desc") {
-                            if (parseInt(x.innerHTML) < parseInt(y.innerHTML)) {
+                            if (xval < yval) {
                                 // If so, mark as a switch and break the loop:
                             shouldSwitch = true;
                             break;
                             }
                         }
-                    } else {
+                    } else { /* n==0 */
                         x = rows[i].getElementsByTagName("TD")[n];
                         y = rows[i + 1].getElementsByTagName("TD")[n];
                     
+                        dir = "asc"
                         /* Check if the two rows should switch place,
                         based on the direction, asc or desc: */
                         if (dir == "asc") {
@@ -716,6 +756,16 @@
                             }
                         }
                     }
+
+                    var xhtml = x.innerHTML;
+                    var yhtml = y.innerHTML;
+
+                    console.log("i=",i)
+                    console.log("x=",xhtml)
+                    console.log("y=",yhtml)
+                    console.log("xval=",xhtml.value)
+                    console.log("yval=",yhtml.value)
+                    console.log("shouldSwitch=",shouldSwitch)
                 }
                 if (shouldSwitch) {
                     /* If a switch has been marked, make the switch
@@ -742,26 +792,23 @@
                 responsive: true,
                 autoWidth: false,
                 dom: 'Bfrtip',
-                //buttons: [
-                //    'copy', 'csv', 'excel', 'pdf'
-                //],
                 paging: false,
                 columnDefs: [
                     // Make score columns non-searchable and non-sortable
-                    { targets: [0, 1], 
+                    { targets: 0, 
                     searchable: false, 
                     orderable: false,
                     width: "100px",
                     className: "dt-left"
                     },
-                    { targets: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 
+                    { targets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
                     searchable: false, 
                     orderable: false,
                     width: "60px",
                     className: "dt-center"
                     },
                     // Configure total score column
-                    { targets: 12, 
+                    { targets: 13, 
                     searchable: false,
                     className: 'total-score',
                     width: "70px"
